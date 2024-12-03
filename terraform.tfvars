@@ -1,0 +1,6 @@
+region         = "East US"
+admin_username = "azureuser"
+admin_password = "Baranagar@11"
+vnetaddress    = "10.0.0.0/16"
+subnetaddress  = "10.0.1.0/24"
+size           = "Standard_D2ads_v6"
