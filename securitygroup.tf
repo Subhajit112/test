@@ -25,7 +25,7 @@ resource "azurerm_network_security_group" "mysg" {
 }
 
 resource "azurerm_network_interface_security_group_association" "association" {
-  count                     = length(azurerm_network_interface.mynetworkinterface) # Number of interfaces
+  count                     = length(azurerm_network_interface.mynetworkinterface)
   network_interface_id      = azurerm_network_interface.mynetworkinterface[count.index].id
   network_security_group_id = azurerm_network_security_group.mysg.id
 }
