@@ -1,5 +1,5 @@
-resource "azurerm_linux_virtual_machine" "myvm1" {
-  count                 = 3
+resource "azurerm_linux_virtual_machine" "myvm" {
+  count                 = length(azurerm_network_interface.mynetworkinterface)
   name                  = "myvm${count.index + 1}"
   location              = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
@@ -12,7 +12,7 @@ resource "azurerm_linux_virtual_machine" "myvm1" {
   }
   admin_username                  = var.admin_username
   admin_password                  = var.admin_password
-  disable_password_authentication = true
+  disable_password_authentication = false
   source_image_reference {
     publisher = "canonical"
     offer     = "0001-com-ubuntu-server-jammy"
@@ -30,7 +30,7 @@ resource "azurerm_linux_virtual_machine" "myvm1" {
       type     = "ssh"
       user     = var.admin_username
       password = var.admin_password
-      host     = azurerm_linux_virtual_machine.myvm1.public_ip_address_id
+      host     = azurerm_public_ip.mypublicip[count.index].ip_address
     }
   }
   tags = {

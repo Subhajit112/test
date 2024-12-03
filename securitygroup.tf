@@ -1,4 +1,4 @@
-resource "azurerm_network_security_group" "name" {
+resource "azurerm_network_security_group" "mysg" {
   name                = "mysecuritygroup"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
@@ -25,6 +25,7 @@ resource "azurerm_network_security_group" "name" {
 }
 
 resource "azurerm_network_interface_security_group_association" "association" {
-  network_interface_id      = azurerm_network_interface.mynetworkinterface.id
-  network_security_group_id = azurerm_network_security_group.id
+  count                     = length(azurerm_network_interface.mynetworkinterface) # Number of interfaces
+  network_interface_id      = azurerm_network_interface.mynetworkinterface[count.index].id
+  network_security_group_id = azurerm_network_security_group.mysg.id
 }
